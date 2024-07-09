@@ -18,7 +18,7 @@ const initialState: TOrderState = {
 };
 
 export const getOrderBurger = createAsyncThunk(
-  `${sliceName}/orderBurger`,
+  'order/orderBurger',
   async (orderData: string[]) => await orderBurgerApi(orderData)
 );
 
@@ -38,7 +38,8 @@ export const orderSlice = createSlice({
   },
   selectors: {
     selectInfo: (state: TOrderState) => state.info,
-    selectStatus: (state: TOrderState) => state.requestStatus
+    selectStatus: (state: TOrderState) => state.requestStatus,
+    selectOrderInfo: (state: TOrderState) => state.orderInfo
   },
   extraReducers: (builder) => {
     builder
@@ -51,9 +52,20 @@ export const orderSlice = createSlice({
       .addCase(getOrderBurger.fulfilled, (state, action) => {
         state.requestStatus = RequestStatus.Success;
         state.info = action.payload.order;
+      })
+      .addCase(getOrderByNumber.pending, (state) => {
+        state.requestStatus = RequestStatus.Loading;
+      })
+      .addCase(getOrderByNumber.fulfilled, (state, action) => {
+        state.requestStatus = RequestStatus.Success;
+        state.orderInfo = action.payload.orders[0];
+      })
+      .addCase(getOrderByNumber.rejected, (state) => {
+        state.requestStatus = RequestStatus.Failed;
       });
   }
 });
 
-export const { selectInfo, selectStatus } = orderSlice.selectors;
+export const { selectInfo, selectStatus, selectOrderInfo } =
+  orderSlice.selectors;
 export const orderActions = orderSlice.actions;

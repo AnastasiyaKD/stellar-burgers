@@ -44,6 +44,10 @@ export const burgerSlice = createSlice({
     moveItemDown: (state, action: PayloadAction<number>) => {
       const item = state.ingredients.splice(action.payload, 1)[0];
       state.ingredients.splice(action.payload + 1, 0, item);
+    },
+    clearConstructor: (state) => {
+      state.bun = null;
+      state.ingredients = [];
     }
   },
   selectors: {
@@ -52,4 +56,11 @@ export const burgerSlice = createSlice({
 });
 
 export const burgerSelectors = burgerSlice.selectors;
-export const burgerActions = burgerSlice.actions;
+export const {
+  clearConstructor,
+  moveItemDown,
+  moveItemUp,
+  resetConstructor,
+  addToConstructor,
+  removeFromConstructor
+} = burgerSlice.actions;

@@ -5,14 +5,18 @@ import { TIngredient, TOrder } from '@utils-types';
 import { useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from '../../services/store';
 import { RootState } from 'src/services/store';
-import { getOrderByNumber, selectInfo } from '../../services/slices/order';
+import {
+  getOrderByNumber,
+  selectInfo,
+  selectOrderInfo
+} from '../../services/slices/order';
 import { selectIngredients } from '../../services/slices/ingredients';
 
 export const OrderInfo: FC = () => {
   /** TODO: взять переменные orderData и ingredients из стора */
   const params = useParams();
   const dispatch = useDispatch();
-  const orderData = useSelector(selectInfo);
+  const orderData = useSelector(selectOrderInfo);
   const ingredients = useSelector(selectIngredients);
   const { number } = useParams<{ number: string }>();
   const numberOrder = Number(useParams().number);

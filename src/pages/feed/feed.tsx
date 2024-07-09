@@ -14,16 +14,10 @@ export const Feed: FC = () => {
   useEffect(() => {
     dispatch(getFeeds());
   }, [dispatch]);
-  // const dispatch = useDispatch();
-  // useEffect(() => {
-  //   dispatch(getFeeds());
-  // }, [dispatch]);
-
-  // const orders = useSelector(feedSelectors.selectOrders);
 
   if (!orders.length) {
     return <Preloader />;
   }
 
-  <FeedUI orders={orders} handleGetFeeds={() => {}} />;
+  return <FeedUI orders={orders} handleGetFeeds={() => {}} />;
 };

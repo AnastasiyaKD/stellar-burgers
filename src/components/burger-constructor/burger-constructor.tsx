@@ -10,7 +10,10 @@ import {
   selectInfo,
   selectStatus
 } from '../../services/slices/order';
-import { burgerSelectors } from '../../services/slices/burgerConstructor';
+import {
+  burgerSelectors,
+  clearConstructor
+} from '../../services/slices/burgerConstructor';
 
 export const BurgerConstructor: FC = () => {
   /** TODO: взять переменные constructorItems, orderRequest и orderModalData из стора */
@@ -41,6 +44,7 @@ export const BurgerConstructor: FC = () => {
   };
   const closeOrderModal = () => {
     dispatch(orderActions.resetOrder());
+    dispatch(clearConstructor());
   };
 
   const price = useMemo(
