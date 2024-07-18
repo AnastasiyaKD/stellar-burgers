@@ -7,9 +7,9 @@ import {
   registerUserApi,
   updateUserApi,
   refreshToken
-} from '@api';
+} from '../../utils/burger-api';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { RequestStatus, TUser } from '@utils-types';
+import { RequestStatus, TUser } from '../../utils/types';
 import { deleteCookie, setCookie } from '../../utils/cookie';
 
 const sliceName = 'user';
@@ -18,12 +18,14 @@ export interface TUserState {
   isAuthChecked: boolean;
   data: TUser | null;
   requestStatus: RequestStatus;
+  error: string | undefined;
 }
 
-const initialState: TUserState = {
+export const initialState: TUserState = {
   isAuthChecked: false,
   data: null,
-  requestStatus: RequestStatus.Idle
+  requestStatus: RequestStatus.Idle,
+  error: undefined
 };
 
 export const userSlice = createSlice({
@@ -151,3 +153,4 @@ export const logoutUser = createAsyncThunk('user/logoutUser', async () => {
 
 export const userSelectors = userSlice.selectors;
 export const userActions = userSlice.actions;
+export const user = userSlice.reducer;

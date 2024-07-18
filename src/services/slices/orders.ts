@@ -9,7 +9,7 @@ export interface TOrdersState {
   requestStatus: RequestStatus;
 }
 
-const initialState: TOrdersState = {
+export const initialState: TOrdersState = {
   orders: [],
   requestStatus: RequestStatus.Idle
 };
@@ -43,3 +43,4 @@ export const ordersSlice = createSlice({
 
 export const { selectOrders } = ordersSlice.selectors;
 export const ordersActions = ordersSlice.actions;
+export const orders = ordersSlice.reducer;
