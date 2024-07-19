@@ -1,5 +1,4 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
-
 import {
   TypedUseSelectorHook,
   useDispatch as dispatchHook,

@@ -9,7 +9,7 @@ export interface TBurgerState {
   ingredients: TConstructorIngredient[];
 }
 
-const initialState: TBurgerState = {
+export const initialState: TBurgerState = {
   bun: null,
   ingredients: []
 };
@@ -18,17 +18,15 @@ export const burgerSlice = createSlice({
   name: sliceName,
   initialState,
   reducers: {
-    addToConstructor: {
-      reducer: (state, action: PayloadAction<TConstructorIngredient>) => {
-        if (action.payload.type === 'bun') {
-          state.bun = action.payload;
-        } else {
-          state.ingredients.push(action.payload);
-        }
-      },
-      prepare: (ingredient: TIngredient) => ({
-        payload: { ...ingredient, id: crypto.randomUUID() }
-      })
+    addToConstructor: (
+      state,
+      action: PayloadAction<TConstructorIngredient>
+    ) => {
+      if (action.payload.type === 'bun') {
+        state.bun = action.payload;
+      } else {
+        state.ingredients.push(action.payload);
+      }
     },
     removeFromConstructor: (state, action: PayloadAction<number>) => {
       state.ingredients.splice(action.payload, 1);
@@ -64,3 +62,4 @@ export const {
   addToConstructor,
   removeFromConstructor
 } = burgerSlice.actions;
+export default burgerSlice.reducer;
