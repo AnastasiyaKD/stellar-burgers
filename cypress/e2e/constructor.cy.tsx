@@ -8,6 +8,11 @@ describe('[1] Проверяем работу конструктора', () => {
     cy.intercept('GET', 'api/ingredients', { fixture: 'ingredients.json' });
   });
   it('Проверям добавление булки и начинки', () => {
+    cy.get('[data-cy="bun1"]').contains('Выберите булки').should('exist');
+    cy.get('[data-cy="ingredient"]')
+      .contains('Выберите начинку')
+      .should('exist');
+    cy.get('[data-cy="bun2"]').contains('Выберите булки').should('exist');
     cy.get(BUN).children('button').click();
     cy.get(INGREDIENT).children('button').click();
     cy.get('[data-cy="constructor"]').contains('Флюоресцентная булка R2-D3');
@@ -22,23 +27,20 @@ describe('[2] Проверяем работу модального окна с �
     cy.visit(BASE_URL);
     cy.intercept('GET', 'api/ingredients', { fixture: 'ingredients.json' });
   });
-  it('Проверяем открытие модального окна', () => {
+  it('Проверяем открытие и закрытие на кнопку модального окна', () => {
+    cy.get('[data-cy= "modal"]').should('not.exist');
     cy.get(BUN).click();
     cy.get('[data-cy= "modal"]').should('be.visible');
-  });
-  it('Проверяем закрытие модального окна по нажатию на кнопку', () => {
-    cy.get(BUN).click();
     cy.get('[data-cy="modal-close"]').click();
     cy.get('[data-cy= "modal"]').should('not.exist');
   });
   it('Проверяем закрытие модального окна по нажатию на оверлей', () => {
+    cy.get('[data-cy= "modal"]').should('not.exist');
     cy.get(BUN).click();
+    cy.get('[data-cy= "modal"]').should('be.visible');
+    cy.get('[data-cy= "modal"]').contains('Флюоресцентная булка R2-D3');
     cy.get('[data-cy= "overlay"]').click({ force: true });
     cy.get('[data-cy= "modal"]').should('not.exist');
-  });
-  it('Проверяем корректность данных выбранного ингредиента в модальном окне', () => {
-    cy.get(BUN).click();
-    cy.get('[data-cy= "modal"]').contains('Флюоресцентная булка R2-D3');
   });
 });
 
